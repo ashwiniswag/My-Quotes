@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">My Quotes</string>
+    <string-array name="category">
+    <item>Nature</item>
+    <item>Mother</item>
+    <item>Father</item>
+    <item>Sister</item>
+    <item>Brother</item>
+    <item>Nation</item>
+    <item>Friends</item>
+    <item>Motivation</item>
+    <item>Love</item>
+    <item>Facts</item>
+    <item>Fiction</item>
+    <item>Memories</item>
+    <item>Broken Heart</item>
+    <item>News</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+</resources>
