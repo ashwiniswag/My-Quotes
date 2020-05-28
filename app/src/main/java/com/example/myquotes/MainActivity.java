@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> name;
 
+    Bundle a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        Intent intent=new Intent(MainActivity.this,PhoneSIgnIn.class);
 //        startActivity(intent);
+        a=new Bundle();
+        a=getIntent().getExtras();
         gridView=findViewById(R.id.grid);
         name = new ArrayList<>();
         name.add("Nature");
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                 Intent intent=new Intent(MainActivity.this,Genre.class);
                 intent.putExtra("Genre",name.get(i));
+                String mcontri="0";
+                mcontri = a.getString("mcontri");
+                intent.putExtra("mcontri",mcontri);
                 startActivity(intent);
             }
         });

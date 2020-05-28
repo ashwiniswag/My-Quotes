@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +30,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
 import java.util.concurrent.TimeUnit;
 
 public class PhoneSIgnIn extends AppCompatActivity {
@@ -44,7 +48,7 @@ public class PhoneSIgnIn extends AppCompatActivity {
     FirebaseAuth mAuth;
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    private SharedPreferences mpref;
+    protected SharedPreferences mpref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,12 +108,6 @@ public class PhoneSIgnIn extends AppCompatActivity {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-                // This callback will be invoked in two situations:
-                // 1 - Instant verification. In some cases the phone number can be instantly
-                //     verified without needing to send or enter a verification code.
-                // 2 - Auto-retrieval. On some devices Google Play services can automatically
-                //     detect the incoming verification SMS and perform verification without
-                //     user action.
                 System.out.println("onVerificationCompleted:" + credential);
 
                 signInWithPhoneAuthCredential(credential);
@@ -117,35 +115,22 @@ public class PhoneSIgnIn extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                // This callback is invoked in an invalid request for verification is made,
-                // for instance if the the phone number format is not valid.
                 System.out.println("onVerificationFailed" + e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    // Invalid request
-                    // ...
-                } else if (e instanceof FirebaseTooManyRequestsException) {
-                    // The SMS quota for the project has been exceeded
-                    // ...
-                }
 
-                // Show a message and update the UI
-                // ...
+                } else if (e instanceof FirebaseTooManyRequestsException) {
+
+                }
+                Toast.makeText(PhoneSIgnIn.this,"Enter Correct OTP",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCodeSent(@NonNull String verificationId,
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
-                // The SMS verification code has been sent to the provided phone number, we
-                // now need to ask the user to enter the code and then construct a credential
-                // by combining the code with a verification ID.
-//                Log.d( "onCodeSent:" + verificationId);
                 System.out.println("onCodeSent:"+ verificationId);
-                // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
                 mResendToken = token;
-
-                // ...
             }
         };        
 
@@ -158,6 +143,7 @@ public class PhoneSIgnIn extends AppCompatActivity {
         FirebaseUser currentuser=mAuth.getCurrentUser();
         if(currentuser!=null){
             Intent user=new Intent(PhoneSIgnIn.this,MainActivity.class);
+            user.putExtra("mcontri","0");
             startActivity(user);
         }
     }
@@ -174,6 +160,12 @@ public class PhoneSIgnIn extends AppCompatActivity {
                             System.out.println( "signInWithCredential:success");
 
                             SharedPreferences.Editor editor=mpref.edit();
+//                            Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.ic_account_circle_black_24dp);
+//                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//                            byte[] dat = baos.toByteArray();
+//                            String encode= Base64.encodeToString(dat,Base64.DEFAULT);
+//                            editor.putString("dp",encode);
                             editor.putString("username",uname.getText().toString());
                             editor.putString("penname",pname.getText().toString());
                             editor.putString("number",number.getText().toString());
@@ -191,6 +183,7 @@ public class PhoneSIgnIn extends AppCompatActivity {
                             ref.child("Gender").setValue(gender.getSelectedItem().toString());
 
                             Intent intent = new Intent(PhoneSIgnIn.this,MainActivity.class);
+                            intent.putExtra("mcontri","0");
                             startActivity(intent);
                         } else {
                             // Sign in failed, display a message and update the UI

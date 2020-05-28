@@ -5,13 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileDisplay"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:padding="15dp"
+        android:id="@+id/dp"
+        android:requiresFadingEdge="vertical"
         android:src="@drawable/ic_account_circle_black_24dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Click Here To Add Profile Photo:"
+        android:id="@+id/dpset"
+        android:padding="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -92,5 +101,14 @@
             android:text="Aaji aab ye bhi dede"/>
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mycontri"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:text="My COntribution"/>
 
 </LinearLayout>

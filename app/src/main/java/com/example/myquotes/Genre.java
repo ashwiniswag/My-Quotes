@@ -3,6 +3,8 @@ package com.example.myquotes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -32,6 +34,7 @@ public class Genre extends AppCompatActivity {
     List<String> sher,pname,title,bold,itallic,underline;
     TextToSpeech textToSpeech;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,7 @@ public class Genre extends AppCompatActivity {
         gridView=findViewById(R.id.showwork);
         genreAdapter=new GenreAdapter(this,sher,pname,title);
         gridView.setAdapter(genreAdapter);
-        disp();
+        disp(a.getString("mcontri"));
 
         textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -83,37 +86,66 @@ public class Genre extends AppCompatActivity {
         });
     }
 
-    public void disp(){
+    public void disp(String z){
         DatabaseReference ref;
+        final SharedPreferences preferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
 //        String userid= FirebaseAuth.getInstance().getCurrentUser().getUid();
-        ref= FirebaseDatabase.getInstance().getReference("Category").child(a.getString("Genre"));
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println("Ye kaam kar raha hai");
-                Iterator<DataSnapshot> items=dataSnapshot.getChildren().iterator();
-                while(items.hasNext()){
-                    DataSnapshot item=items.next();
-                    if(item.child("Title")!=null){
-                        sher.add(item.child("Content").getValue().toString());
-                        pname.add(item.child("Pen Name").getValue().toString());
-                        title.add(item.child("Title").getValue().toString());
-                        bold.add(item.child("Bold").getValue().toString());
-                        itallic.add(item.child("Itallic").getValue().toString());
-                        underline.add(item.child("Underline").getValue().toString());
-                        System.out.println("Ye kaam kar raha hai");
+        if(z!="1") {
+            ref = FirebaseDatabase.getInstance().getReference("Category").child(a.getString("Genre"));
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    System.out.println("Ye kaam kar raha hai");
+                    Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+                    while (items.hasNext()) {
+                        DataSnapshot item = items.next();
+                        if (item.child("Title") != null) {
+                            sher.add(item.child("Content").getValue().toString());
+                            pname.add(item.child("Pen Name").getValue().toString());
+                            title.add(item.child("Title").getValue().toString());
+                            bold.add(item.child("Bold").getValue().toString());
+                            itallic.add(item.child("Itallic").getValue().toString());
+                            underline.add(item.child("Underline").getValue().toString());
+                            System.out.println("Ye kaam kar raha hai");
+                        } else {
+                            System.out.println("Ye kaam kar raha hai");
+                        }
+                        genreAdapter.notifyDataSetChanged();
                     }
-                    else {
-                        System.out.println("Ye kaam kar raha hai");
-                    }
-                    genreAdapter.notifyDataSetChanged();
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(Genre.this,"Not Changed",Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(Genre.this, "Not Changed", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            String userid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            ref=FirebaseDatabase.getInstance().getReference("User").child(userid).child("Category").child(a.getString("Genre"));
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+                    while (items.hasNext()) {
+                        DataSnapshot item = items.next();
+                        if(item.child("Title")!=null){
+                            sher.add(item.child("Content").getValue().toString());
+                            pname.add(preferences.getString("penname",""));
+                            title.add(item.child("Title").getValue().toString());
+                            bold.add(item.child("Bold").getValue().toString());
+                            itallic.add(item.child("Itallic").getValue().toString());
+                            underline.add(item.child("Underline").getValue().toString());
+                        }
+                        genreAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(Genre.this, "Not Changed", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
