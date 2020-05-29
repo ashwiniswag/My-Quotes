@@ -10,5 +10,7 @@
         android:title="Profile"/>
     <item android:id="@+id/post"
         android:title="Post"/>
+    <item android:id="@+id/contact"
+        android:title="Suggestons"/>
 
 </menu>
