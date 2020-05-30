@@ -7,7 +7,7 @@
     tools:context=".ProfileDisplay"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="#91ACE4">
+    android:background="#BDDD64">
 
     <androidx.cardview.widget.CardView
         android:layout_width="280dp"
@@ -42,7 +42,8 @@
         android:layout_height="wrap_content"
         android:text="Click Here To Add Profile Photo:"
         android:id="@+id/dpset"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        android:textColor="#E1CC3E72"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,13 +55,17 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Username:"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="#E1CC3E72"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/usname"
             android:textSize="20dp"
-            android:text="Ashwini Pal"/>
+            android:textStyle="bold"
+            android:text="Ashwini Pal"
+            android:textColor="#009688"/>
 
     </LinearLayout>
 
@@ -74,13 +79,17 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Penname:"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="#E1CC3E72"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/pename"
             android:textSize="20dp"
-            android:text="Safir"/>
+            android:textStyle="bold"
+            android:text="Safir"
+            android:textColor="#009688"/>
 
     </LinearLayout>
 
@@ -94,13 +103,17 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Gender:"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="#E1CC3E72"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/gen"
             android:textSize="20dp"
-            android:text="Gay"/>
+            android:textStyle="bold"
+            android:text="Gay"
+            android:textColor="#009688"/>
 
     </LinearLayout>
 
@@ -114,13 +127,17 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Contact:"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="#E1CC3E72"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/contact"
             android:textSize="20dp"
-            android:text="Aaji aab ye bhi dede"/>
+            android:textStyle="bold"
+            android:text="Aaji aab ye bhi dede"
+            android:textColor="#009688"/>
 
     </LinearLayout>
 

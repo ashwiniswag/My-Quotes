@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Genre"
-    android:background="#91ACE4">
+    android:background="#BDDD64">
 
     <GridView
         android:layout_width="match_parent"

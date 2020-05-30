@@ -44,7 +44,6 @@
             android:id="@+id/category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/category"
             android:padding="5dp"
             android:textSize="20dp" />
 

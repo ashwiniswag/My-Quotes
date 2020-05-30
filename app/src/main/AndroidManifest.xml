@@ -11,16 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".New_Category"></activity>
-        <activity android:name=".Post" />
-        <activity android:name=".ProfileDisplay" />
-        <activity android:name=".Genre" />
-        <activity android:name=".PhoneSIgnIn">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".New_Category" />
+        <activity android:name=".Post" />
+        <activity android:name=".ProfileDisplay" />
+        <activity android:name=".Genre" />
+        <activity android:name=".PhoneSIgnIn">
         </activity>
         <activity android:name=".MainActivity" />
     </application>

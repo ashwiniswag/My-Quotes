@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +19,10 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -42,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     Bundle a;
     DatabaseReference ref;
     FloatingActionButton add;
+    List<Bitmap> bit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         a=getIntent().getExtras();
         gridView=findViewById(R.id.grid);
         add=findViewById(R.id.add);
+        bit=new ArrayList<>();
 //        images=new ArrayList<>();
 
 //        images.add(R.drawable.nature);
@@ -82,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 //        name.add("Memories");
 //        name.add("Broken Heart");
 //        name.add("News");
-        gridadapter=new Gridadapter(this,name);//,images);
+        gridadapter=new Gridadapter(this,name,bit);//,images);
         gridView.setAdapter(gridadapter);
 
         if(a.getString("admin").equals("1")){
@@ -172,7 +181,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void disp(){
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("All Category").child("Name");
+        final StorageReference sref= FirebaseStorage.getInstance().getReference("Category");
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("All Category");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -180,7 +190,30 @@ public class MainActivity extends AppCompatActivity {
                 while (items.hasNext()){
                     DataSnapshot item = items.next();
                     if(item.child("Name")!=null){
+
                         name.add(item.child("Name").getValue().toString());
+                        final long ONE_MEGABYTE = 1024 * 1024;
+                        sref.child(item.child("Name").getValue().toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                if(bytes!=null) {
+                                    Bitmap bitmap;
+                                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    bit.add(bitmap);
+                                    System.out.println("Bitmsp is present :)    " + bitmap);
+                                }
+                                else{
+                                    System.out.println("Bitmsp is null :(");
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MainActivity.this,"Image Not Found",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
                         System.out.println(item.child("Name").getValue().toString());
                     }
                 }

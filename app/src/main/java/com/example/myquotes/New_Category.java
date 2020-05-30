@@ -78,11 +78,11 @@ public class New_Category extends AppCompatActivity {
                 });
 
 
-                dref= FirebaseDatabase.getInstance().getReference("All Category").child("Name");
+                dref= FirebaseDatabase.getInstance().getReference("All Category").push().child("Name");
                 dref.setValue(text.getText().toString());
                 Intent intent=new Intent(New_Category.this,MainActivity.class);
                 intent.putExtra("admin","1");
-                intent.putExtra("mcontri","0");
+                intent.putExtra("mcontri","1");
                 startActivity(intent);
             }
         });

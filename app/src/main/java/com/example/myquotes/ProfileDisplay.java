@@ -14,6 +14,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.renderscript.ScriptGroup;
+import android.text.InputType;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -68,6 +70,8 @@ public class ProfileDisplay extends AppCompatActivity {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setInputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 input.setLayoutParams(lp);
                 alertDialog.setView(input);
                 alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -122,6 +126,7 @@ public class ProfileDisplay extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(ProfileDisplay.this,MainActivity.class);
                 intent.putExtra("mcontri","1");
+                intent.putExtra("admin","0");
                 startActivity(intent);
             }
         });
