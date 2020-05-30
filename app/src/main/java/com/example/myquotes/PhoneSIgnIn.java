@@ -144,6 +144,7 @@ public class PhoneSIgnIn extends AppCompatActivity {
         if(currentuser!=null){
             Intent user=new Intent(PhoneSIgnIn.this,MainActivity.class);
             user.putExtra("mcontri","0");
+            user.putExtra("admin","0");
             startActivity(user);
         }
     }
@@ -169,6 +170,7 @@ public class PhoneSIgnIn extends AppCompatActivity {
                             editor.putString("username",uname.getText().toString());
                             editor.putString("penname",pname.getText().toString());
                             editor.putString("number",number.getText().toString());
+//                            editor.putString("admin","0");
                             editor.putString("gender",gender.getSelectedItem().toString());
                             editor.commit();
 
@@ -184,6 +186,7 @@ public class PhoneSIgnIn extends AppCompatActivity {
 
                             Intent intent = new Intent(PhoneSIgnIn.this,MainActivity.class);
                             intent.putExtra("mcontri","0");
+                            intent.putExtra("admin","0");
                             startActivity(intent);
                         } else {
                             // Sign in failed, display a message and update the UI

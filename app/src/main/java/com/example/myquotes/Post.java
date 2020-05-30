@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 public class Post extends AppCompatActivity {
 
@@ -74,6 +75,7 @@ public class Post extends AppCompatActivity {
                 ref.child("Bold").setValue(String.valueOf(b));
                 ref.child("Itallic").setValue(String.valueOf(i));
                 ref.child("Underline").setValue(String.valueOf(u));
+                ref.child("timestamp").setValue(ServerValue.TIMESTAMP);
 
                 mcat.child("Title").setValue(title.getText().toString());
                 mcat.child("Content").setValue(content.getText().toString());
@@ -81,7 +83,10 @@ public class Post extends AppCompatActivity {
                 mcat.child("Bold").setValue(String.valueOf(b));
                 mcat.child("Itallic").setValue(String.valueOf(i));
                 mcat.child("Underline").setValue(String.valueOf(u));
-                startActivity(new Intent(Post.this,MainActivity.class));
+                mcat.child("timestamp").setValue(ServerValue.TIMESTAMP);
+                Intent intent=new Intent(Post.this,MainActivity.class);
+                intent.putExtra("mcontri","0");
+                startActivity(intent);
             }
         });
 

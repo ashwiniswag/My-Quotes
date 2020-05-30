@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myquotes">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Post"></activity>
+        <activity android:name=".New_Category"></activity>
+        <activity android:name=".Post" />
         <activity android:name=".ProfileDisplay" />
         <activity android:name=".Genre" />
         <activity android:name=".PhoneSIgnIn">
@@ -21,7 +24,5 @@
         </activity>
         <activity android:name=".MainActivity" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

@@ -18,11 +18,16 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
     Gridadapter gridadapter;
 
     List<String> name;
-    List<Integer> images;
+//    List<Integer> images;
 //    Integer[] images;
 
     Bundle a;
     DatabaseReference ref;
+    FloatingActionButton add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,40 +50,44 @@ public class MainActivity extends AppCompatActivity {
         a=new Bundle();
         a=getIntent().getExtras();
         gridView=findViewById(R.id.grid);
+        add=findViewById(R.id.add);
+//        images=new ArrayList<>();
 
-        images=new ArrayList<>();
-
-        images.add(R.drawable.nature);
-        images.add(R.drawable.mother);
-        images.add(R.drawable.father);
-        images.add(R.drawable.sister);
-        images.add(R.drawable.brother);
-        images.add(R.drawable.nation);
-        images.add(R.drawable.friends);
-        images.add(R.drawable.motivation);
-        images.add(R.drawable.heart);
-        images.add(R.drawable.facts);
-        images.add(R.drawable.fiction);
-        images.add(R.drawable.memories);
-        images.add(R.drawable.broken_heart);
-        images.add(R.drawable.news);
+//        images.add(R.drawable.nature);
+//        images.add(R.drawable.mother);
+//        images.add(R.drawable.father);
+//        images.add(R.drawable.sister);
+//        images.add(R.drawable.brother);
+//        images.add(R.drawable.nation);
+//        images.add(R.drawable.friends);
+//        images.add(R.drawable.motivation);
+//        images.add(R.drawable.heart);
+//        images.add(R.drawable.facts);
+//        images.add(R.drawable.fiction);
+//        images.add(R.drawable.memories);
+//        images.add(R.drawable.broken_heart);
+//        images.add(R.drawable.news);
         name = new ArrayList<>();
-        name.add("Nature");
-        name.add("Mother");
-        name.add("Father");
-        name.add("Sister");
-        name.add("Brother");
-        name.add("Nation");
-        name.add("Friends");
-        name.add("Motivation");
-        name.add("Love");
-        name.add("Facts");
-        name.add("Fiction");
-        name.add("Memories");
-        name.add("Broken Heart");
-        name.add("News");
-        gridadapter=new Gridadapter(this,name,images);
+//        name.add("Nature");
+//        name.add("Mother");
+//        name.add("Father");
+//        name.add("Sister");
+//        name.add("Brother");
+//        name.add("Nation");
+//        name.add("Friends");
+//        name.add("Motivation");
+//        name.add("Love");
+//        name.add("Facts");
+//        name.add("Fiction");
+//        name.add("Memories");
+//        name.add("Broken Heart");
+//        name.add("News");
+        gridadapter=new Gridadapter(this,name);//,images);
         gridView.setAdapter(gridadapter);
+
+        if(a.getString("admin").equals("1")){
+            add.setVisibility(View.VISIBLE);
+        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,6 +100,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,New_Category.class);
+                startActivity(intent);
+            }
+        });
+        disp();
     }
 
     @Override
@@ -97,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
 //        return super.onCreateOptionsMenu(menu);
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.options,menu);
+        MenuItem menuItem=menu.findItem(R.id.signout);
+//        menuItem.
         return  true;
     }
 
@@ -148,5 +169,28 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void disp(){
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("All Category").child("Name");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+                while (items.hasNext()){
+                    DataSnapshot item = items.next();
+                    if(item.child("Name")!=null){
+                        name.add(item.child("Name").getValue().toString());
+                        System.out.println(item.child("Name").getValue().toString());
+                    }
+                }
+                gridadapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

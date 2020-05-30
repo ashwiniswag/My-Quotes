@@ -2,9 +2,11 @@ package com.example.myquotes;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -15,7 +17,9 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +59,40 @@ public class ProfileDisplay extends AppCompatActivity {
         mcontri=findViewById(R.id.mycontri);
         image=findViewById(R.id.dp);
 
-        sref=storage.getReference("Images").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder alertDialog=new AlertDialog.Builder(ProfileDisplay.this);
+                alertDialog.setTitle("Enter The Password To Unlock Admin Mode");
+                final EditText input = new EditText(ProfileDisplay.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+                alertDialog.setView(input);
+                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.setPositiveButton("Verify", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(input.getText().toString().equals("swag@123")){
+                            Intent intent=new Intent(ProfileDisplay.this,MainActivity.class);
+                            intent.putExtra("mcontri","0");
+                            intent.putExtra("admin","1");
+                            startActivity(intent);
+                        }
+                    }
+                });
+                alertDialog.show();
+                return true;
+            }
+        });
+
+        sref=storage.getReference("Images").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Dp");
         final long ONE_MEGABYTE = 1024 * 1024;
         sref.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override

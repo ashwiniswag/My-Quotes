@@ -92,6 +92,7 @@ public class Genre extends AppCompatActivity {
 //        String userid= FirebaseAuth.getInstance().getCurrentUser().getUid();
         if(z!="1") {
             ref = FirebaseDatabase.getInstance().getReference("Category").child(a.getString("Genre"));
+            ref.orderByChild("timestamp");
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -100,12 +101,12 @@ public class Genre extends AppCompatActivity {
                     while (items.hasNext()) {
                         DataSnapshot item = items.next();
                         if (item.child("Title") != null) {
-                            sher.add(item.child("Content").getValue().toString());
-                            pname.add(item.child("Pen Name").getValue().toString());
-                            title.add(item.child("Title").getValue().toString());
-                            bold.add(item.child("Bold").getValue().toString());
-                            itallic.add(item.child("Itallic").getValue().toString());
-                            underline.add(item.child("Underline").getValue().toString());
+                            sher.add(0,item.child("Content").getValue().toString());
+                            pname.add(0,item.child("Pen Name").getValue().toString());
+                            title.add(0,item.child("Title").getValue().toString());
+                            bold.add(0,item.child("Bold").getValue().toString());
+                            itallic.add(0,item.child("Itallic").getValue().toString());
+                            underline.add(0,item.child("Underline").getValue().toString());
                             System.out.println("Ye kaam kar raha hai");
                         } else {
                             System.out.println("Ye kaam kar raha hai");
@@ -123,19 +124,22 @@ public class Genre extends AppCompatActivity {
         else{
             String userid=FirebaseAuth.getInstance().getCurrentUser().getUid();
             ref=FirebaseDatabase.getInstance().getReference("User").child(userid).child("Category").child(a.getString("Genre"));
+            ref.orderByChild("timestamp");
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+//                    items.
                     while (items.hasNext()) {
                         DataSnapshot item = items.next();
                         if(item.child("Title")!=null){
-                            sher.add(item.child("Content").getValue().toString());
-                            pname.add(preferences.getString("penname",""));
-                            title.add(item.child("Title").getValue().toString());
-                            bold.add(item.child("Bold").getValue().toString());
-                            itallic.add(item.child("Itallic").getValue().toString());
-                            underline.add(item.child("Underline").getValue().toString());
+                            sher.add(0,item.child("Content").getValue().toString());
+                            pname.add(0,preferences.getString("penname",""));
+                            title.add(0,item.child("Title").getValue().toString());
+                            bold.add(0,item.child("Bold").getValue().toString());
+                            itallic.add(0,item.child("Itallic").getValue().toString());
+                            underline.add(0,item.child("Underline").getValue().toString());
+                            System.out.println(sher.get(0));
                         }
                         genreAdapter.notifyDataSetChanged();
                     }
