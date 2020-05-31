@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreen"
     android:background="@drawable/guest">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cd"
+        android:layout_width="290dp"
+        android:layout_height="290dp"
+        android:padding="5dp"
+        app:cardCornerRadius="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19"
+        app:cardBackgroundColor="#1C98E6">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -13,6 +26,7 @@
         android:layout_height="280dp"
         android:padding="5dp"
         app:cardCornerRadius="300dp"
+        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -29,6 +43,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/my_quotes" />
     </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textView"
@@ -39,7 +54,7 @@
         android:text="Swag Corporation.ltd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/cd" />
 
     <ProgressBar
         android:id="@+id/progress"
@@ -48,7 +63,7 @@
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/cd" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

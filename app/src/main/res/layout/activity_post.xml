@@ -19,8 +19,7 @@
             android:background="#FBFBFB"
             android:padding="5dp"
             android:text="TITLE:"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/title"
@@ -37,8 +36,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Choose a Category:"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textSize="20dp"/>
 
         <Spinner
             android:id="@+id/category"
