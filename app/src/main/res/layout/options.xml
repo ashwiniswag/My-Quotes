@@ -13,7 +13,8 @@
         android:padding="5dp"
         android:layout_gravity="center"
         app:cardCornerRadius="15dp"
-        android:background="#ED9393">
+        app:cardBackgroundColor="#ED9393">
+<!--        android:background="#ED9393">-->
 
     <ImageView
         android:id="@+id/img"

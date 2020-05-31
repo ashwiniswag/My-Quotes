@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Genre"
-    android:background="@drawable/guest">
+    tools:context=".UserInformation"
+    android:orientation="vertical">
 
-    <GridView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/showwork"
-        android:numColumns="1"
+        android:id="@+id/usetinfo"
         android:padding="5dp"/>
 
 </LinearLayout>

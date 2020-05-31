@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/asignout"
+        android:title="Sign Out"
+        android:icon="@drawable/ic_power_settings_new_black_24dp"
+        app:showAsAction="always"/>
+    <item android:id="@+id/aprofile"
+        android:title="Profile"/>
+    <item android:id="@+id/acontact"
+        android:title="Suggestions"/>
+    <item android:id="@+id/uinfo"
+        android:title="All Users"/>
+
+</menu>

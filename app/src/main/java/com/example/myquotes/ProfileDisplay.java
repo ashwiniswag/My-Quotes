@@ -28,6 +28,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -64,6 +69,7 @@ public class ProfileDisplay extends AppCompatActivity {
         image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                final DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Password");
                 AlertDialog.Builder alertDialog=new AlertDialog.Builder(ProfileDisplay.this);
                 alertDialog.setTitle("Enter The Password To Unlock Admin Mode");
                 final EditText input = new EditText(ProfileDisplay.this);
@@ -83,12 +89,29 @@ public class ProfileDisplay extends AppCompatActivity {
                 alertDialog.setPositiveButton("Verify", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(input.getText().toString().equals("swag@123")){
-                            Intent intent=new Intent(ProfileDisplay.this,MainActivity.class);
-                            intent.putExtra("mcontri","0");
-                            intent.putExtra("admin","1");
-                            startActivity(intent);
-                        }
+
+                        // = new String[1];
+                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            String pass;
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                pass =dataSnapshot.child("Password").getValue().toString();
+                                if(input.getText().toString().equals(pass)){
+                                    Intent intent=new Intent(ProfileDisplay.this,MainActivity.class);
+                                    intent.putExtra("mcontri","0");
+                                    intent.putExtra("admin","1");
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Toast.makeText(ProfileDisplay.this,"Incorrect Password",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
                     }
                 });
                 alertDialog.show();
@@ -170,7 +193,7 @@ public class ProfileDisplay extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                         // ...
-//                        Toast.makeText(ProfileDisplay.this,"Successfull",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileDisplay.this,"Profile Picture Updated Successfully",Toast.LENGTH_SHORT).show();
                     }
                 });
 
